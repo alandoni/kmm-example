@@ -120,7 +120,7 @@ kswift {
     install(dev.icerock.moko.kswift.plugin.feature.SealedToSwiftEnumFeature)
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink>().matching {
+/*tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink>().matching {
     it.binary is org.jetbrains.kotlin.gradle.plugin.mpp.Framework
 }.configureEach {
     doFirst {
@@ -128,4 +128,4 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink>().matching {
         val xcodeSwiftDirectory = File(buildDir, "generated/swift")
         swiftDirectory.copyRecursively(xcodeSwiftDirectory, overwrite = true)
    }
-}
+}*/

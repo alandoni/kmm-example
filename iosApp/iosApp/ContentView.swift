@@ -2,7 +2,7 @@ import SwiftUI
 import Foundation
 import shared
 
-struct ContentView: View {
+struct ContentViewWithViewModelFromShared: View {
     let viewModel = MainViewModel()
 
     @State var state: MainViewModelState? = MainViewModelState.Loading()
@@ -11,7 +11,7 @@ struct ContentView: View {
         viewModel.state.watch { newState in
             self.state = newState
         }
-        viewModel.getHtml()
+        viewModel.getRocketLaunches()
     }
     
 	var body: some View {
@@ -25,6 +25,36 @@ struct ContentView: View {
             Text(error)
         } else {
             let rocketLaunches = (state as? MainViewModelState.Success)?.value ?? []
+            if rocketLaunches.count == 0 {
+                Text("Empty List")
+            } else {
+                List(rocketLaunches, id: \.self) { launch in
+                    RocketLaunchesRow(launch: launch)
+                }
+            }
+        }
+    }
+}
+
+struct ContentView: View {
+    @ObservedObject var viewModel = ContentViewModel()
+
+    func load() {
+        viewModel.getRocketLaunches()
+    }
+    
+    var body: some View {
+        switch viewModel.state {
+        case .loading:
+            ProgressView()
+                .onAppear(perform: {
+                    self.load()
+                })
+        case .error(let err):
+            let error = err.localizedDescription
+            Text(error)
+        case .success(let value):
+            let rocketLaunches = value
             if rocketLaunches.count == 0 {
                 Text("Empty List")
             } else {

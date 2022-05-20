@@ -17,6 +17,7 @@ class LaunchesRepository: KoinComponent {
     private val launchesQueries: LaunchesQueries by inject()
     private val rocketQueries: RocketQueries by inject()
 
+    @Throws(Exception::class)
     suspend fun getLaunches(): List<RocketLaunch> = withContext(Dispatchers.Unconfined) {
         try {
             service.getLaunches().also {

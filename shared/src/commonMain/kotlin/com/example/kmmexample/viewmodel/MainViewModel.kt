@@ -15,7 +15,7 @@ class MainViewModel: ViewModel(), KoinComponent {
     val state
         get() = _state.asCommonFlow()
 
-    fun getHtml() = coroutine {
+    fun getRocketLaunches() = coroutine {
         _state.value = MainViewModelState.Loading
         try {
             _state.value = MainViewModelState.Success(repository.getLaunches())
