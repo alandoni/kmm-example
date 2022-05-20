@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -28,7 +29,24 @@ actual open class ViewModel: ViewModel() {
     }
 }
 
-actual open class CommonFlow<T> actual constructor(private val origin: Flow<T>) : Flow<T> by origin{
+actual open class CommonFlow<T>
+actual constructor(private val origin: Flow<T>) : Flow<T> by origin {
+    actual fun watch(block: (T) -> Unit): Cancellable {
+        val job = Job()
+
+        this.onEach {
+            block(it)
+        }.launchIn(CoroutineScope(Dispatchers.Main) + job)
+
+        return CancellableImpl(job)
+    }
+}
+
+actual open class MutableCommonFlow<T>
+actual constructor(
+    private val origin: MutableStateFlow<T>
+): MutableStateFlow<T> by origin {
+
     actual fun watch(block: (T) -> Unit): Cancellable {
         val job = Job()
 

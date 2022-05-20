@@ -12,7 +12,7 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-serialization:$kotlinVersion")
         classpath("com.android.tools.build:gradle:7.2.0")
         classpath("com.squareup.sqldelight:gradle-plugin:$sqlDelightVersion")
-        classpath("dev.icerock.moko:kswift-gradle-plugin:0.5.0")
+        //classpath("dev.icerock.moko:kswift-gradle-plugin:0.5.0")
     }
 }
 

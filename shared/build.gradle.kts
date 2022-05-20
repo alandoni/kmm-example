@@ -3,7 +3,7 @@ plugins {
     id("kotlinx-serialization")
     id("com.android.library")
     id("com.squareup.sqldelight")
-    id("dev.icerock.moko.kswift")
+    id("dev.icerock.moko.kswift") version "0.5.0"
 }
 
 kotlin {
@@ -118,9 +118,10 @@ sqldelight {
 // Make it easier to use sealed classes as enum
 kswift {
     install(dev.icerock.moko.kswift.plugin.feature.SealedToSwiftEnumFeature)
+    install(dev.icerock.moko.kswift.plugin.feature.PlatformExtensionFunctionsFeature)
 }
 
-/*tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink>().matching {
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink>().matching {
     it.binary is org.jetbrains.kotlin.gradle.plugin.mpp.Framework
 }.configureEach {
     doFirst {
@@ -128,4 +129,4 @@ kswift {
         val xcodeSwiftDirectory = File(buildDir, "generated/swift")
         swiftDirectory.copyRecursively(xcodeSwiftDirectory, overwrite = true)
    }
-}*/
+}

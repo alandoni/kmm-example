@@ -15,6 +15,8 @@ class MainViewModel: ViewModel(), KoinComponent {
     val state
         get() = _state.asCommonFlow()
 
+    val text = MutableStateFlow("").asMutableCommonFlow()
+
     fun getRocketLaunches() = coroutine {
         _state.value = MainViewModelState.Loading
         try {
