@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import platform.Foundation.NSRunLoop
 import platform.Foundation.performBlock
 import platform.UIKit.UIAction
+import platform.UIKit.UILabel
 import platform.UIKit.UITextField
 import kotlin.coroutines.CoroutineContext
 
@@ -77,16 +78,4 @@ actual constructor(
 
         return CancellableImpl(job)
     }
-}
-
-fun UITextField.bind(flow: MutableCommonFlow<String?>) {
-    flow.watch {
-        this.text = it
-    }
-    this.addAction(
-        UIAction.actionWithHandler {
-            flow.value = this.text
-        },
-        1 shl 17 //editingChanged
-    )
 }

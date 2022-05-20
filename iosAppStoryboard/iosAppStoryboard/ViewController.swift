@@ -26,10 +26,13 @@ class ViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-        self.errorLabel.bind(flow: viewModel.text)
+        self.errorLabel.bindText(flow: viewModel.text)
         
-        viewModel.text.watch { t in
-            self.label.text = t as? String ?? ""
+        let commonFlow = viewModel.text.map { t in
+            return (t as? String)?.count.formatted() ?? "0"
+        }
+        if let flow = commonFlow as? CommonFlow<NSString> {
+            self.label.bindText(flow: flow)
         }
         
         viewModel.state.watch { state in
