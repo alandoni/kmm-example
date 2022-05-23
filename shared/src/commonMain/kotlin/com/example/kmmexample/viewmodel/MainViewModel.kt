@@ -5,7 +5,9 @@ import com.example.kmmexample.data.repository.LaunchesRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import kotlin.js.JsExport
 
+@JsExport
 class MainViewModel: ViewModel(), KoinComponent {
 
     private val repository: LaunchesRepository by inject()
@@ -27,6 +29,7 @@ class MainViewModel: ViewModel(), KoinComponent {
     }
 }
 
+@JsExport
 sealed class MainViewModelState {
     object Loading : MainViewModelState()
     data class Success(val value: List<RocketLaunch>) : MainViewModelState()

@@ -1,9 +1,11 @@
 package com.example.kmmexample.data.models
 
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlin.js.JsExport
 
 @Serializable
+@JsExport
 data class RocketLaunch(
     @SerialName("flight_number")
     val flightNumber: Int,

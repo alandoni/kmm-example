@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var progressView: UIActivityIndicatorView!
     
     let viewModel = MainViewModel()
-    var rocketLaunches: [RocketLaunch] = []
+    var rocketLaunches: [ModelsRocketLaunch] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,12 +28,12 @@ class ViewController: UIViewController {
         
         self.errorLabel.bindText(flow: viewModel.text)
         
-        let commonFlow = viewModel.text.map { t in
-            return (t as? String)?.count.formatted() ?? "0"
-        }
-        if let flow = commonFlow as? CommonFlow<NSString> {
-            self.label.bindText(flow: flow)
-        }
+//         let commonFlow = viewModel.text.map { t in
+//             return "\((t as? String)?.count ?? "0")"
+//         }
+//         if let flow = commonFlow as? CommonFlow<NSString> {
+//             self.label.bindText(flow: flow)
+//         }
         
         viewModel.state.watch { state in
             if state is MainViewModelState.Loading {

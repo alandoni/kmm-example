@@ -6,7 +6,7 @@ import io.ktor.server.plugins.contentnegotiation.*
 
 import com.example.kmmexample.backend.routing.*
 import com.example.kmmexample.di.Database
-import com.example.kmmexample.di.Repositories
+import com.example.kmmexample.backend.di.Repositories
 import io.ktor.serialization.gson.*
 import io.ktor.server.application.*
 import org.koin.ktor.plugin.Koin

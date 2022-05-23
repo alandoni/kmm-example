@@ -73,7 +73,7 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 struct RocketLaunchesRow: View {
-    var launch: RocketLaunch
+    var launch: ModelsRocketLaunch
 
     var body: some View {
         Text(self.launch.missionName)

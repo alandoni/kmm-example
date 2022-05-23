@@ -11,6 +11,9 @@ actual class DatabaseDriverFactory {
         ds.driverClassName = "com.mysql.jdbc.Driver"
         ds.username = "root"
         ds.password = "mysqlroot"
+
+        //ds.driverClassName = "org.postgresql.ds.PGSimpleDataSource"
+        //ds.jdbcUrl =  "jdbc:postgresql://localhost:5432/test"
         return ds.asJdbcDriver()
     }
 }

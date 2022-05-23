@@ -53,7 +53,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		C18861DA2838391D0045D0E3 /* kmmexample_shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = kmmexample_shared.swift; path = "../../shared/build/xcode-frameworks/Debug/iphonesimulator15.4/sharedSwift/kmmexample_shared.swift"; sourceTree = "<group>"; };
+		C18861DA2838391D0045D0E3 /* kmmexample_shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = kmmexample_shared.swift; path = "../../shared/build/xcode-frameworks/Debug/iphonesimulator14.5/sharedSwift/kmmexample_shared.swift"; sourceTree = "<group>"; };
 		C1F8B9DF283830F60010A890 /* iosAppStoryboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosAppStoryboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1F8B9E2283830F60010A890 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C1F8B9E4283830F60010A890 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };

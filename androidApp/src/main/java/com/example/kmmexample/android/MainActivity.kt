@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.getHtml()
+        viewModel.getRocketLaunches()
     }
 }
 

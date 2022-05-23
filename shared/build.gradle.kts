@@ -1,9 +1,10 @@
 plugins {
     kotlin("multiplatform")
+    //kotlin("js")
     id("kotlinx-serialization")
     id("com.android.library")
     id("com.squareup.sqldelight")
-    id("dev.icerock.moko.kswift") version "0.5.0"
+    id("dev.icerock.moko.kswift")
 }
 
 kotlin {
@@ -12,10 +13,6 @@ kotlin {
     jvm()
 
     macosX64("macOS")
-
-    js(IR) {
-//        browser()
-    }
 
     listOf(
         iosX64(),
@@ -27,6 +24,17 @@ kotlin {
         }
     }
 
+    js(IR) {
+//        browser {
+//            webpackTask {
+//                output.libraryTarget = "commonjs2"
+//            }
+//        }
+//        useCommonJs()
+        browser()
+        //binaries.executable()
+    }
+
     sourceSets {
         val ktorVersion: String by project
         val koinVersion: String by project
@@ -34,6 +42,7 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
+                api(project(":models"))
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
                 implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
@@ -87,6 +96,8 @@ kotlin {
 
         val jvmMain by getting {
             dependencies {
+                implementation("org.postgresql:postgresql:42.1.4")
+                implementation("mysql:mysql-connector-java:8.0.26")
                 implementation("com.squareup.sqldelight:jdbc-driver:1.5.1")
                 implementation("com.zaxxer:HikariCP:5.0.1")
             }
@@ -121,7 +132,7 @@ kswift {
     install(dev.icerock.moko.kswift.plugin.feature.PlatformExtensionFunctionsFeature)
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink>().matching {
+/*tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink>().matching {
     it.binary is org.jetbrains.kotlin.gradle.plugin.mpp.Framework
 }.configureEach {
     doFirst {
@@ -129,4 +140,4 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink>().matching {
         val xcodeSwiftDirectory = File(buildDir, "generated/swift")
         swiftDirectory.copyRecursively(xcodeSwiftDirectory, overwrite = true)
    }
-}
+}*/

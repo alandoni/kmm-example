@@ -10,14 +10,14 @@ import org.koin.ktor.ext.inject
 fun Route.rockets() {
     val repository: RocketsRepository by inject()
 
-    route("/apks") {
+    route("/rockets") {
         get {
             try {
                 val response = repository.getLaunches()
                 call.respond(HttpStatusCode.OK, response)
             } catch (e: Throwable) {
                 e.printStackTrace()
-                call.respond(HttpStatusCode.BadRequest, "Test")
+                call.respond(HttpStatusCode.BadRequest, e.stackTrace.toString())
             }
         }
     }
