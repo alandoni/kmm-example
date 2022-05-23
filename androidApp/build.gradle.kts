@@ -17,6 +17,9 @@ android {
             isMinifyEnabled = false
         }
     }
+    buildFeatures {
+        dataBinding = true
+    }
 }
 
 val koinVersion: String by project

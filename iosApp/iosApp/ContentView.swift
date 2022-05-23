@@ -6,15 +6,26 @@ struct ContentViewWithViewModelFromShared: View {
     let viewModel = MainViewModel()
 
     @State var state: MainViewModelState? = MainViewModelState.Loading()
+    @State var text: String = ""
 
     func load() {
-        viewModel.state.watch { newState in
+        viewModel.state.collect { newState in
             self.state = newState
         }
+        viewModel.text.collect { text in
+            self.text = (text as? String) ?? ""
+        }
+
         viewModel.getRocketLaunches()
     }
     
 	var body: some View {
+        TextField("", text: $text)
+            .background(Color.green)
+            .onChange(of: text) { newValue in
+                viewModel.text.tryEmit(value: newValue as NSString)
+            }
+        Text("\(text.count)")
         if state is MainViewModelState.Loading {
             ProgressView()
                 .onAppear(perform: {
@@ -36,6 +47,7 @@ struct ContentViewWithViewModelFromShared: View {
     }
 }
 
+@MainActor
 struct ContentView: View {
     @ObservedObject var viewModel = ContentViewModel()
 
@@ -44,6 +56,12 @@ struct ContentView: View {
     }
     
     var body: some View {
+        TextField("", text: $viewModel.text)
+            .background(Color.green)
+            .onChange(of: viewModel.text) { newValue in
+                //viewModel.text.tryEmit(value: newValue as NSString)
+            }
+        Text("\(viewModel.text.count)")
         switch viewModel.state {
         case .loading:
             ProgressView()

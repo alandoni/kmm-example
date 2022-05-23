@@ -4,11 +4,12 @@ import shared
 @main
 struct iOSApp: App {
     init() {
-        KoinInit().start()
+        KoinInit.companion.start()
     }
 	var body: some Scene {
 		WindowGroup {
             ContentViewWithViewModelFromShared()
+            //ContentView()
 		}
 	}
 }

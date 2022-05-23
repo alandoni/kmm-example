@@ -12,7 +12,7 @@ kotlin {
 
     jvm()
 
-    macosX64("macOS")
+    //macosX64("macOS")
 
     listOf(
         iosX64(),
@@ -25,14 +25,13 @@ kotlin {
     }
 
     js(IR) {
-//        browser {
-//            webpackTask {
-//                output.libraryTarget = "commonjs2"
-//            }
-//        }
-//        useCommonJs()
-        browser()
-        //binaries.executable()
+//      useCommonJs()
+        browser {
+            webpackTask {
+                output.libraryTarget = "commonjs2"
+            }
+        }
+        binaries.executable()
     }
 
     sourceSets {
@@ -98,6 +97,7 @@ kotlin {
             dependencies {
                 implementation("org.postgresql:postgresql:42.1.4")
                 implementation("mysql:mysql-connector-java:8.0.26")
+                implementation("com.squareup.sqldelight:sqlite-driver:1.5.3")
                 implementation("com.squareup.sqldelight:jdbc-driver:1.5.1")
                 implementation("com.zaxxer:HikariCP:5.0.1")
             }

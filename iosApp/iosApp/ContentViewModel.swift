@@ -1,9 +1,11 @@
 import Foundation
 import shared
 
+@MainActor
 class ContentViewModel: ObservableObject {
     
     @Published var state: ViewModelState = .loading
+    @Published var text: String = ""
     let repository = LaunchesRepository()
     
     func getRocketLaunches() {
@@ -21,6 +23,6 @@ class ContentViewModel: ObservableObject {
     enum ViewModelState {
         case loading
         case error(error: Error)
-        case success(value: [RocketLaunch])
+        case success(value: [ModelsRocketLaunch])
     }
 }

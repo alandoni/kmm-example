@@ -28,14 +28,14 @@ class ViewController: UIViewController {
         
         self.errorLabel.bindText(flow: viewModel.text)
         
-//         let commonFlow = viewModel.text.map { t in
-//             return "\((t as? String)?.count ?? "0")"
-//         }
-//         if let flow = commonFlow as? CommonFlow<NSString> {
-//             self.label.bindText(flow: flow)
-//         }
+        let commonFlow = viewModel.text.map { t in
+            return "\((t as? String)?.count ?? 0)"
+        }
+        if let flow = commonFlow as? CommonFlow<NSString> {
+            self.label.bindText(flow: flow)
+        }
         
-        viewModel.state.watch { state in
+        viewModel.state.collect { state in
             if state is MainViewModelState.Loading {
                 self.tableView.isHidden = true
                 self.progressView.isHidden = false
