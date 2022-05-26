@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackOutput.Target.UMD
+
 plugins {
     kotlin("multiplatform")
     //kotlin("js")
@@ -25,10 +27,10 @@ kotlin {
     }
 
     js(IR) {
-//      useCommonJs()
         browser {
             webpackTask {
-                output.libraryTarget = "commonjs2"
+                output.libraryTarget = UMD
+                destinationDirectory = File(buildDir, "generated/js")
             }
         }
         binaries.executable()
@@ -51,6 +53,8 @@ kotlin {
                 implementation("com.squareup.sqldelight:coroutines-extensions:$sqlDelightVersion")
 
                 implementation("io.insert-koin:koin-core:$koinVersion")
+
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
             }
         }
         val commonTest by getting {
@@ -98,14 +102,14 @@ kotlin {
                 implementation("org.postgresql:postgresql:42.1.4")
                 implementation("mysql:mysql-connector-java:8.0.26")
                 implementation("com.squareup.sqldelight:sqlite-driver:1.5.3")
-                implementation("com.squareup.sqldelight:jdbc-driver:1.5.1")
+                implementation("com.squareup.sqldelight:jdbc-driver:1.5.3")
                 implementation("com.zaxxer:HikariCP:5.0.1")
             }
         }
 
         val jsMain by getting {
             dependencies {
-                //...
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.6.1")
             }
         }
     }

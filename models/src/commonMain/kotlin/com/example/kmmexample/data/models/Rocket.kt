@@ -5,7 +5,6 @@ import kotlinx.serialization.Serializable
 import kotlin.js.JsExport
 
 @Serializable
-@JsExport
 data class Rocket(
     @SerialName("rocket_id")
     val id: String,

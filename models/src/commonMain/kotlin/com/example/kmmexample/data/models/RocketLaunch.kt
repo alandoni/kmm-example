@@ -5,7 +5,6 @@ import kotlinx.serialization.SerialName
 import kotlin.js.JsExport
 
 @Serializable
-@JsExport
 data class RocketLaunch(
     @SerialName("flight_number")
     val flightNumber: Int,
