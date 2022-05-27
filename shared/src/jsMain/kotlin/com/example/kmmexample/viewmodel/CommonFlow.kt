@@ -14,7 +14,6 @@ actual constructor(private val origin: Flow<T>): Flow<T> by origin {
                 block(it)
             }
         }
-
         return CancellableImpl(job)
     }
 }
@@ -29,7 +28,6 @@ actual constructor(
                 block(it)
             }
         }
-
         return CancellableImpl(job)
     }
 }

@@ -6,7 +6,7 @@ import kotlin.js.JsExport
 
 class KoinInit {
     companion object {
-        fun start(platformSpecific: KoinAppDeclaration?) {
+        fun start(platformSpecific: KoinAppDeclaration? = null) {
             startKoin {
                 platformSpecific?.let { it() }
                 modules(

@@ -1,5 +1,7 @@
 package com.example.kmmexample
 
-expect class Platform() {
-    val platform: String
+enum class Platform {
+    iOS, Android, Web, Windows, Linux, MacOSX, Jvm
 }
+
+expect fun getPlatform(): Platform

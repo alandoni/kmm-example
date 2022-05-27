@@ -1,16 +1,23 @@
 pluginManagement {
-    fun getKotlinVersion(): String {
+    fun getVersion(key: String): String {
         val versions = File("$rootDir/gradle.properties").inputStream().use {
             java.util.Properties().apply { load(it) }
         }
-        return versions.getProperty("kotlinVersion")
+        return versions.getProperty(key)
     }
 
     repositories {
         google()
         gradlePluginPortal()
         mavenCentral()
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
+
+    plugins {
+        kotlin("multiplatform").version(getVersion("kotlinVersion"))
+        id("org.jetbrains.compose").version(getVersion("composePluginVersion"))
+    }
+
     resolutionStrategy {
         eachPlugin {
             /*if (requested.id.id.startsWith("org.jetbrains.kotlin")) {
