@@ -23,6 +23,8 @@ actual class DatabaseDriverFactory {
         //return ds.asJdbcDriver()
 
         // For SQLITE
-        return JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
+        val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
+        AppDatabase.Schema.create(driver)
+        return driver
     }
 }

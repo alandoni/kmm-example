@@ -3,7 +3,6 @@ package com.example.kmmexample.backend
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
-
 import com.example.kmmexample.backend.routing.*
 import com.example.kmmexample.di.Database
 import com.example.kmmexample.backend.di.Repositories

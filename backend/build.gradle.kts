@@ -1,7 +1,7 @@
 plugins {
     application
-    //kotlin("jvm") version "1.6.21"
-    id("kotlin-platform-jvm")
+    kotlin("jvm")
+//    id("kotlin-platform-jvm")
     id("com.squareup.sqldelight")
 }
 

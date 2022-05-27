@@ -5,7 +5,6 @@ import com.example.kmmexample.data.repository.LaunchesRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import kotlin.js.JsExport
 
 class MainViewModel: ViewModel(), KoinComponent {
 

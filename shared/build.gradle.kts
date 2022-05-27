@@ -40,6 +40,7 @@ kotlin {
         val ktorVersion: String by project
         val koinVersion: String by project
         val sqlDelightVersion: String by project
+        val coroutinesVersion: String by project
 
         val commonMain by getting {
             dependencies {
@@ -54,7 +55,7 @@ kotlin {
 
                 implementation("io.insert-koin:koin-core:$koinVersion")
 
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
             }
         }
         val commonTest by getting {
@@ -104,12 +105,15 @@ kotlin {
                 implementation("com.squareup.sqldelight:sqlite-driver:1.5.3")
                 implementation("com.squareup.sqldelight:jdbc-driver:1.5.3")
                 implementation("com.zaxxer:HikariCP:5.0.1")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+                implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
+                //implementation("io.ktor:ktor-client-cio:$ktorVersion")
             }
         }
 
         val jsMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.6.1")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:$coroutinesVersion")
             }
         }
     }
