@@ -1,16 +1,26 @@
-package com.example.kmmexample.web
+package com.example.kmmexample.ios
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Application
 import com.example.kmmexample.data.models.RocketLaunch
 import com.example.kmmexample.di.KoinInit
 import com.example.kmmexample.viewmodel.MainViewModel
 import com.example.kmmexample.viewmodel.MainViewModelState
-import org.jetbrains.compose.web.attributes.InputType
-import org.jetbrains.compose.web.css.background
-import org.jetbrains.compose.web.dom.*
-import org.jetbrains.compose.web.renderComposable
+import kotlinx.cinterop.*
+import platform.Foundation.NSStringFromClass
+import platform.UIKit.*
 
-fun main() {
+fun main(args: Array<String>) {
     KoinInit.start()
 
     memScoped {
@@ -22,11 +32,8 @@ fun main() {
     }
 }
 
-class SkikoAppDelegate : UIResponder, UIApplicationDelegateProtocol {
+class SkikoAppDelegate @ObjCObjectBase.OverrideInit constructor() : UIResponder(), UIApplicationDelegateProtocol {
     companion object : UIResponderMeta(), UIApplicationDelegateProtocolMeta
-
-    @ObjCObjectBase.OverrideInit
-    constructor() : super()
 
     private var _window: UIWindow? = null
     override fun window() = _window
@@ -34,18 +41,19 @@ class SkikoAppDelegate : UIResponder, UIApplicationDelegateProtocol {
         _window = window
     }
 
-    override fun application(application: UIApplication, didFinishLaunchingWithOptions: Map<Any?, *>?): Boolean {
-        val repo = koin.get<PeopleInSpaceRepositoryInterface>()
-
+    override fun application(
+        application: UIApplication,
+        didFinishLaunchingWithOptions: Map<Any?, *>?
+    ): Boolean {
         window = UIWindow(frame = UIScreen.mainScreen.bounds)
-        window!!.rootViewController = Application("KmmExample") {
+        window?.rootViewController = Application("KmmExample") {
             Column {
                 // To skip upper part of screen.
                 Box(modifier = Modifier.height(48.dp))
-                PersonListScreen(repo)
+                mainScreen()
             }
         }
-        window!!.makeKeyAndVisible()
+        window?.makeKeyAndVisible()
         return true
     }
 }
@@ -58,27 +66,21 @@ fun mainScreen() {
     val state by viewModel.state.collectAsState(initial = MainViewModelState.Loading)
 
     LaunchedEffect(true) {
-        console.log("Getting rocket launches")
+        print("Getting rocket launches")
         viewModel.getRocketLaunches()
     }
 
-    Div {
-        Input(
-            type = InputType.Text,
-            attrs = {
-                onInput { event ->
-                    viewModel.text.value = event.value
-                }
-                style {
-                    background("#00dd00")
-                }
-            }
+    Column(
+        Modifier.fillMaxWidth()
+    ) {
+        BasicTextField(
+            text,
+            onValueChange = { s: String ->
+                viewModel.text.value = s
+            },
+            modifier = Modifier.fillMaxWidth().background(Color.Green),
         )
-    }
-    Div {
-        Text("${text.length}")
-    }
-    Div {
+        Text(text = text.length.toString())
         rocketsList(state)
     }
 }
@@ -90,9 +92,7 @@ fun rocketsList(state: MainViewModelState) {
             Text("Loading")
         is MainViewModelState.Success -> {
             state.value.map {
-                Div {
-                    rocketLaunchRow(it)
-                }
+                rocketLaunchRow(it)
             }
         }
         is MainViewModelState.Error -> {
@@ -103,6 +103,5 @@ fun rocketsList(state: MainViewModelState) {
 
 @Composable
 fun rocketLaunchRow(rocketLaunch: RocketLaunch) {
-    console.log(rocketLaunch.missionName)
     Text(rocketLaunch.missionName)
 }
