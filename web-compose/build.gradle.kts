@@ -37,6 +37,7 @@ kotlin {
 
             dependencies {
                 implementation(project(":shared"))
+                implementation(project(":multiplatform-compose"))
                 implementation(compose.web.core)
                 implementation(compose.web.widgets)
                 implementation(compose.runtime)
