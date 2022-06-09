@@ -31,10 +31,7 @@ rootProject.name = "kmmexample"
 
 include(":models")
 include(":shared")
-include(":multiplatform-compose")
 include(":backend")
 include(":androidApp")
 include(":androidAppCompose")
-include(":web-compose")
-include(":desktop-compose")
-include(":ios-compose")
+include(":sharedcompose")

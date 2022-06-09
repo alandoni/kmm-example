@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     kotlin("multiplatform")
     id("kotlinx-serialization")
@@ -11,7 +13,8 @@ kotlin {
     js(IR) {
         browser()
     }
-    macosX64()
+    macosX64("macos")
+    macosArm64()
     android()
     listOf(
         iosX64(),
@@ -55,17 +58,19 @@ kotlin {
             iosArm64Test.dependsOn(this)
             iosSimulatorArm64Test.dependsOn(this)
         }
-        val jvmMain by getting {
-
-        }
+        val jvmMain by getting
     }
 }
 
 android {
     compileSdk = 32
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    sourceSets["main"].manifest.srcFile("src/AndroidManifest.xml")
     defaultConfig {
         minSdk = 21
         targetSdk = 32
     }
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "11"
 }

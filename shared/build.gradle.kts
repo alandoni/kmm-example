@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackOutput.Target.UMD
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("multiplatform")
@@ -14,8 +15,6 @@ kotlin {
 
     jvm()
 
-    //macosX64("macOS")
-
     listOf(
         iosX64(),
         iosArm64(),
@@ -25,6 +24,9 @@ kotlin {
             baseName = "shared"
         }
     }
+
+    macosX64("macos")
+    macosArm64()
 
     js(IR) {
         browser {
@@ -91,6 +93,19 @@ kotlin {
         val iosX64Test by getting
         val iosArm64Test by getting
         val iosSimulatorArm64Test by getting
+
+        val macosMain by getting {
+            dependsOn(commonMain)
+            dependencies {
+                implementation("io.insert-koin:koin-core:$koinVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+                implementation("com.squareup.sqldelight:native-driver:$sqlDelightVersion")
+            }
+        }
+        val macosArm64Main by getting {
+            dependsOn(macosMain)
+        }
+
         val iosTest by creating {
             dependsOn(commonTest)
             iosX64Test.dependsOn(this)
@@ -114,9 +129,14 @@ kotlin {
         val jsMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:$coroutinesVersion")
+                implementation("io.insert-koin:koin-core:$koinVersion")
             }
         }
     }
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "11"
 }
 
 android {

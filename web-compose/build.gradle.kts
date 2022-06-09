@@ -31,6 +31,7 @@ kotlin {
     }
 
     sourceSets {
+        val coroutinesVersion: String by project
         val jsMain by getting {
             //kotlin.srcDir("src/jsMain/kotlin")
             //resources.srcDir("src/jsMain/resources")
@@ -41,7 +42,7 @@ kotlin {
                 implementation(compose.web.core)
                 implementation(compose.web.widgets)
                 implementation(compose.runtime)
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.6.1")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:$coroutinesVersion")
             }
         }
     }

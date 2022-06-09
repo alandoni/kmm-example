@@ -10,9 +10,6 @@ class App: Application() {
         super.onCreate()
         KoinInit.start {
             androidContext(this@App)
-            modules(
-                ViewModel
-            )
         }
     }
 }

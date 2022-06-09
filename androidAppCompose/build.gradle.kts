@@ -1,5 +1,3 @@
-val composeVersion: String by project
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -39,6 +37,7 @@ android {
         compose = true
     }
     composeOptions {
+        val composeVersion: String by project
         kotlinCompilerExtensionVersion = composeVersion
     }
     packagingOptions {
@@ -52,15 +51,16 @@ dependencies {
     implementation(project(":shared"))
 
     val koinVersion: String by project
+    val composeVersion: String by project
 
     implementation("io.insert-koin:koin-core:$koinVersion")
     implementation("io.insert-koin:koin-android:$koinVersion")
 
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.4.1")
-    implementation("com.google.android.material:material:1.6.0")
+    implementation("androidx.core:core-ktx:1.8.0")
+    implementation("androidx.appcompat:appcompat:1.4.2")
+    implementation("com.google.android.material:material:1.6.1")
     implementation("androidx.compose.ui:ui:$composeVersion")
-    implementation("androidx.compose.material3:material3:1.0.0-alpha12")
+    implementation("androidx.compose.material3:material3:1.0.0-alpha13")
     implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
     implementation("androidx.activity:activity-compose:1.4.0")
