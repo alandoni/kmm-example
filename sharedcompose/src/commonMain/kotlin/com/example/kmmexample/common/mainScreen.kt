@@ -16,14 +16,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.example.kmmexample.data.models.Links
+import com.example.kmmexample.data.models.Rocket
 import com.example.kmmexample.data.models.RocketLaunch
-import com.example.kmmexample.di.KoinInit
-import com.example.kmmexample.viewmodel.MainViewModel
-import com.example.kmmexample.viewmodel.MainViewModelState
+//import com.example.kmmexample.di.KoinInit
+//import com.example.kmmexample.viewmodel.MainViewModel
+//import com.example.kmmexample.viewmodel.MainViewModelState
 
 @Composable
 fun mainScreen() {
-    KoinInit.start()
+    //KoinInit.start()
 
     list()
 //}
@@ -31,18 +33,22 @@ fun mainScreen() {
 
 @Composable
 fun list() {
-    val viewModel = remember { MainViewModel() }
+    //val viewModel = remember { MainViewModel() }
 
-    val text by viewModel.text.collectAsState()
-    val state by viewModel.state.collectAsState(initial = MainViewModelState.Loading)
+    //val text by viewModel.text.collectAsState()
+    //val state by viewModel.state.collectAsState(initial = MainViewModelState.Loading)
 
     LaunchedEffect(true) {
-        viewModel.getRocketLaunches()
+        //viewModel.getRocketLaunches()
     }
+
+    var text = remember { "text" }
 
     Column(
         Modifier.fillMaxSize()
     ) {
+        // BasicTextField still depends on Scroll, which is not implemented yet
+        // for Web/iOS/MacOs
 //        BasicTextField(
 //            text,
 //            onValueChange = { s: String ->
@@ -55,12 +61,42 @@ fun list() {
             text = text.length.toString()
         )
         rocketsList(
-            state
+//            state
+            listOf(
+                RocketLaunch(
+                    1,
+                    "A",
+                    2020,
+                    "",
+                    Rocket(
+                        "1",
+                        "Rocket 1",
+                        ""
+                    ),
+                    "",
+                    true,
+                    Links("", "")
+                ),
+                RocketLaunch(
+                    1,
+                    "B",
+                    2021,
+                    "",
+                    Rocket(
+                        "2",
+                        "Rocket 2",
+                        ""
+                    ),
+                    "",
+                    true,
+                    Links("", "")
+                )
+            )
         )
     }
 }
 
-@Composable
+/*@Composable
 fun rocketsList(
     state: MainViewModelState
 ) {
@@ -69,24 +105,28 @@ fun rocketsList(
         is MainViewModelState.Loading ->
             Text("Loading")
         is MainViewModelState.Success -> {
-            Column {
-//                items(value, key = { it }) {
-//                    rocketLaunchRow(
-//                        it
-//                    )
-//                }
-                state.value.forEach {
-                    rocketLaunchRow(it)
-                }
-            }
+            rocketsList(state.value)
         }
         is MainViewModelState.Error -> {
             Text(state.error.message ?: "Error")
         }
     }
+}*/
+
+@Composable
+fun rocketsList(list: List<RocketLaunch>) {
+    Column {
+//                items(value, key = { it }) {
+//                    rocketLaunchRow(
+//                        it
+//                    )
+//                }
+        list.forEach {
+            rocketLaunchRow(it)
+        }
+    }
 }
 
-    //
 @Composable
 fun rocketLaunchRow(
     rocketLaunch: RocketLaunch
