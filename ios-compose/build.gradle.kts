@@ -21,9 +21,15 @@ kotlin {
     listOf(
         iosX64("uikitX64"),
         iosArm64("uikitArm64"),
+        iosSimulatorArm64("uikitSimArm64"),
     ).forEach {
+        it.binaries.framework {
+            isStatic = false
+            linkerOpts.add("-lsqlite3")
+        }
         it.binaries.executable {
-            entryPoint = "main"
+            linkerOpts.add("-lsqlite3")
+            entryPoint = "com.example.kmmexample.ios.main"
             freeCompilerArgs += listOf(
                 "-linker-option", "-framework", "-linker-option", "Metal",
                 "-linker-option", "-framework", "-linker-option", "CoreText",
@@ -58,8 +64,8 @@ compose.experimental {
         projectName = "kmmexample"
         deployConfigurations {
             simulator("IPhone") {
-                //Usage: ./gradlew iosDeployIPhone8Debug
-                device = IOSDevices.IPHONE_8
+                //Usage: ./gradlew iosDeployIPhoneDebug
+                device = IOSDevices.IPHONE_13
             }
             simulator("IPad") {
                 //Usage: ./gradlew iosDeployIPadDebug
@@ -67,7 +73,7 @@ compose.experimental {
             }
             connectedDevice("Device") {
                 //Usage: ./gradlew iosDeployDeviceRelease
-                this.teamId="***"
+                this.teamId = "***"
             }
         }
     }

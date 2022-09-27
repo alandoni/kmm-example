@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -91,8 +93,10 @@ fun rocketsList(state: MainViewModelState) {
         is MainViewModelState.Loading ->
             Text("Loading")
         is MainViewModelState.Success -> {
-            state.value.map {
-                rocketLaunchRow(it)
+            LazyColumn {
+                items(state.value, key = { it.missionName }) { rocketLaunch ->
+                    RocketLaunchRow(rocketLaunch)
+                }
             }
         }
         is MainViewModelState.Error -> {
@@ -102,6 +106,6 @@ fun rocketsList(state: MainViewModelState) {
 }
 
 @Composable
-fun rocketLaunchRow(rocketLaunch: RocketLaunch) {
+fun RocketLaunchRow(rocketLaunch: RocketLaunch) {
     Text(rocketLaunch.missionName)
 }

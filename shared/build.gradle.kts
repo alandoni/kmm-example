@@ -23,6 +23,8 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
+            isStatic = false
+            linkerOpts.add("-lsqlite3")
         }
     }
 
@@ -100,7 +102,7 @@ kotlin {
 
         val jvmMain by getting {
             dependencies {
-                implementation("org.postgresql:postgresql:42.1.4")
+                //implementation("org.postgresql:postgresql:42.1.4")
                 implementation("mysql:mysql-connector-java:8.0.26")
                 implementation("com.squareup.sqldelight:sqlite-driver:1.5.3")
                 implementation("com.squareup.sqldelight:jdbc-driver:1.5.3")
@@ -120,11 +122,11 @@ kotlin {
 }
 
 android {
-    compileSdk = 32
+    compileSdk = 33
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = 21
-        targetSdk = 32
+        targetSdk = 33
     }
 }
 
@@ -132,6 +134,7 @@ sqldelight {
     database("AppDatabase") {
         packageName = "com.example.kmmexample.data.database"
     }
+    linkSqlite = true
 }
 
 // Make it easier to use sealed classes as enum
