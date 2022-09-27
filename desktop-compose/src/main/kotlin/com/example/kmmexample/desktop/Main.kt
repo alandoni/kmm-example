@@ -3,6 +3,8 @@ package com.example.kmmexample.desktop
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -65,8 +67,10 @@ fun rocketsList(state: MainViewModelState) {
         is MainViewModelState.Loading ->
             Text("Loading")
         is MainViewModelState.Success -> {
-            state.value.map {
-                rocketLaunchRow(it)
+            LazyColumn {
+                items(state.value, key = { it.missionName }) { rocketLaunch ->
+                    rocketLaunchRow(rocketLaunch)
+                }
             }
         }
         is MainViewModelState.Error -> {
