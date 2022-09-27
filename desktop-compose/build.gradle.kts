@@ -1,17 +1,14 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.compose.compose
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
-    application
     kotlin("jvm")
     id("org.jetbrains.compose")
 }
 
 group = "com.example.kmmexample.desktop"
-version = "1.0"
-application {
-    mainClass.set("com.example.kmmexample.desktop.MainKt")
-}
+version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -30,4 +27,15 @@ dependencies {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+compose.desktop {
+    application {
+        nativeDistributions {
+            packageName = "com.example.kmmexample"
+            mainClass = "com.example.kmmexample.desktop.MainKt"
+            packageVersion = "1.0.0"
+            targetFormats(TargetFormat.Dmg, TargetFormat.Exe, TargetFormat.Deb)
+        }
+    }
 }
