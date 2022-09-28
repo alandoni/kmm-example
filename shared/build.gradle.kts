@@ -103,10 +103,13 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 //implementation("org.postgresql:postgresql:42.1.4")
-                implementation("mysql:mysql-connector-java:8.0.26")
-                implementation("com.squareup.sqldelight:sqlite-driver:1.5.3")
-                implementation("com.squareup.sqldelight:jdbc-driver:1.5.3")
-                implementation("com.zaxxer:HikariCP:5.0.1")
+                //implementation("mysql:mysql-connector-java:8.0.26")
+                //implementation("com.squareup.sqldelight:sqlite-driver:$sqlDelightVersion")
+                implementation("com.squareup.sqldelight:jdbc-driver:$sqlDelightVersion")
+                implementation("com.squareup.sqldelight:sqlite-driver:$sqlDelightVersion")
+
+                //implementation("com.squareup.sqldelight:native-driver:$sqlDelightVersion")
+                //implementation("com.zaxxer:HikariCP:5.0.1")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
                 implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
                 //implementation("io.ktor:ktor-client-cio:$ktorVersion")

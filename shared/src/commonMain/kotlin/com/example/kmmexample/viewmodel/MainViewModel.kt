@@ -23,6 +23,7 @@ class MainViewModel: ViewModel(), KoinComponent {
             _state.value = MainViewModelState.Success(repository.getLaunches())
         } catch (e: Exception) {
             _state.value = MainViewModelState.Error(e)
+            e.printStackTrace()
         }
     }
 }

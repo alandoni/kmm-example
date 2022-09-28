@@ -2,8 +2,7 @@ package com.example.kmmexample.data.database
 
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
-import com.squareup.sqldelight.sqlite.driver.asJdbcDriver
-import com.zaxxer.hikari.HikariDataSource
+import java.io.File
 
 actual class DatabaseDriverFactory {
     actual fun createDriver(): SqlDriver {
@@ -23,8 +22,43 @@ actual class DatabaseDriverFactory {
         //return ds.asJdbcDriver()
 
         // For SQLITE
-        val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
-        AppDatabase.Schema.create(driver)
+
+        val file = File(
+            System.getProperty("user.dir") + File.separator + ".." + File.separator + "db"
+        )
+        if (!file.exists()) {
+            file.mkdir()
+        }
+        val driver = JdbcSqliteDriver(
+            "jdbc:sqlite:${file.absolutePath}${File.separator}database.db"
+        )
+        if (driver.getVersion() == 0) {
+            AppDatabase.Schema.create(driver)
+            driver.setVersion(1)
+        } else {
+            AppDatabase.invoke(
+                driver,
+            )
+        }
         return driver
     }
+}
+
+fun SqlDriver.getVersion(): Int {
+    val sqlCursor = executeQuery(
+        null,
+        "PRAGMA user_version;",
+        0,
+        null
+    )
+    return sqlCursor.use { sqlCursor.getLong(0)?.toInt() ?: 0 }
+}
+
+fun SqlDriver.setVersion(version: Int) {
+    execute(
+        null,
+        String.format("PRAGMA user_version = %d;", version),
+        0,
+        null
+    )
 }
